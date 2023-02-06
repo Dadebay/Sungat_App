@@ -10,6 +10,7 @@ import 'package:sekillendirisungaty/constants/constants.dart';
 
 import '../../settings/views/settings_view.dart';
 import '../../videos/views/videos_view.dart';
+import '../controllers/home_controller.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  final HomeController homeController = Get.put(HomeController());
+
   PageController tabBarPageController = PageController(
     initialPage: 0,
     keepPage: true,
@@ -50,7 +53,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 backgroundColor: Colors.white,
                 rippleColor: Colors.white,
                 hoverColor: Colors.white,
-                tabBackgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.6),
+                tabBackgroundColor: homeController.findMainColor.value == 1
+                    ? kPrimaryColor.withOpacity(0.6)
+                    : homeController.findMainColor.value == 2
+                        ? kPrimaryColor1.withOpacity(0.6)
+                        : kPrimaryColor2.withOpacity(0.6),
                 gap: 6,
                 activeColor: Colors.blueGrey,
                 duration: Duration(milliseconds: 400),

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sekillendirisungaty/app/modules/home/controllers/home_controller.dart';
 
 import '../../../../constants/constants.dart';
 import 'bottom_nav_bar.dart';
@@ -18,9 +19,8 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     checkConnection();
-    
+    homeController.returnMainColor();
   }
 
   void checkConnection() async {
@@ -41,6 +41,8 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
       _showDialog();
     }
   }
+
+  final HomeController homeController = Get.put(HomeController());
 
   void _showDialog() {
     showDialog(
@@ -63,9 +65,13 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
                   children: <Widget>[
                     Text(
                       'noConnection1'.tr,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24.0,
-                        color: kPrimaryColor,
+                        color: homeController.findMainColor.value == 1
+                            ? kPrimaryColor
+                            : homeController.findMainColor.value == 2
+                                ? kPrimaryColor1
+                                : kPrimaryColor2,
                         fontFamily: gilroyMedium,
                       ),
                     ),
@@ -89,7 +95,11 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.background,
+                        backgroundColor: homeController.findMainColor.value == 1
+                            ? kPrimaryColor
+                            : homeController.findMainColor.value == 2
+                                ? kPrimaryColor1
+                                : kPrimaryColor2,
                         shape: RoundedRectangleBorder(
                           borderRadius: borderRadius10,
                         ),
@@ -137,6 +147,7 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
@@ -148,7 +159,7 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Türkmenistanyň şekillendiriş sungatynyň taryhy. \nÝagşymyradow N.",
+                "Türkmenistanyň şekillendiriş sungatynyň taryhy.",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black, fontFamily: gilroyBold, fontSize: 20),
               ),
@@ -158,7 +169,13 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
             "Jumaýew Serdar Salamowiç",
             style: TextStyle(color: Colors.black, fontFamily: gilroyBold, fontSize: 18),
           ),
-          LinearProgressIndicator()
+          LinearProgressIndicator(
+            color: homeController.findMainColor.value == 1
+                ? kPrimaryColor
+                : homeController.findMainColor.value == 2
+                    ? kPrimaryColor1
+                    : kPrimaryColor2,
+          )
         ],
       ),
     );

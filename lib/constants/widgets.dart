@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
+import 'package:sekillendirisungaty/app/modules/home/views/connection_check_page.dart';
 
 import '../app/modules/home/controllers/home_controller.dart';
 import 'constants.dart';
@@ -10,9 +11,15 @@ dynamic noBannerImage() {
   return Center(child: Text('noImage'.tr));
 }
 
+final HomeController homeController = Get.put(HomeController());
+
 dynamic spinKit() {
   return CircularProgressIndicator(
-    color: kPrimaryColor,
+    color: homeController.findMainColor.value == 1
+        ? kPrimaryColor
+        : homeController.findMainColor.value == 2
+            ? kPrimaryColor1
+            : kPrimaryColor2,
   );
 }
 
@@ -45,7 +52,11 @@ Container divider() {
     color: Colors.white,
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     child: Divider(
-      color: kPrimaryColor.withOpacity(0.4),
+      color: homeController.findMainColor.value == 1
+          ? kPrimaryColor.withOpacity(0.4)
+          : homeController.findMainColor.value == 2
+              ? kPrimaryColor1.withOpacity(0.4)
+              : kPrimaryColor2.withOpacity(0.4),
       thickness: 2,
     ),
   );
@@ -62,9 +73,13 @@ Padding namePart({required String text, required bool removeIcon, required Funct
             ? SizedBox.shrink()
             : IconButton(
                 onPressed: onTap,
-                icon: const Icon(
+                icon: Icon(
                   IconlyLight.arrowRightCircle,
-                  color: kPrimaryColor,
+                  color: homeController.findMainColor.value == 1
+                      ? kPrimaryColor
+                      : homeController.findMainColor.value == 2
+                          ? kPrimaryColor1
+                          : kPrimaryColor2,
                   size: 25,
                 ),
               )
@@ -137,6 +152,98 @@ void changeLanguage() {
             ),
             title: const Text(
               'Русский',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+void changeColor(BuildContext context) {
+  final HomeController homeController = Get.put(HomeController());
+
+  Get.bottomSheet(
+    Container(
+      padding: const EdgeInsets.only(bottom: 20),
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Wrap(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              bottom: 5,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox.shrink(),
+                Text(
+                  'appColor1'.tr,
+                  style: const TextStyle(color: Colors.black, fontFamily: gilroyBold, fontSize: 18),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const Icon(CupertinoIcons.xmark_circle, size: 22, color: Colors.black),
+                )
+              ],
+            ),
+          ),
+          divider(),
+          ListTile(
+            onTap: () {
+              homeController.saveColorInt(1);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                return ConnectionCheckpage();
+              }));
+            },
+            leading: Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
+            ),
+            title: Text(
+              'appColor2'.tr,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          divider(),
+          ListTile(
+            onTap: () {
+              homeController.saveColorInt(2);
+
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                return ConnectionCheckpage();
+              }));
+            },
+            leading: Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor1),
+            ),
+            title: Text(
+              'appColor3'.tr,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          divider(),
+          ListTile(
+            onTap: () {
+              homeController.saveColorInt(3);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) {
+                return ConnectionCheckpage();
+              }));
+            },
+            leading: Container(
+              width: 35,
+              height: 35,
+              decoration: BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor2),
+            ),
+            title: Text(
+              'appColor4'.tr,
               style: TextStyle(color: Colors.black),
             ),
           ),

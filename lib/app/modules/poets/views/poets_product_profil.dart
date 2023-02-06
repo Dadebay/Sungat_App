@@ -8,10 +8,11 @@ import 'package:sekillendirisungaty/constants/custom_app_bar.dart';
 
 import '../../../../constants/constants.dart';
 import '../../../../constants/widgets.dart';
+import '../../home/controllers/home_controller.dart';
 
 class PoetsProductProfil extends StatelessWidget {
   final DocumentSnapshot streamSnapshot;
-  const PoetsProductProfil({super.key, required this.streamSnapshot});
+  PoetsProductProfil({super.key, required this.streamSnapshot});
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +23,35 @@ class PoetsProductProfil extends StatelessWidget {
           SizedBox(
             height: 40,
           ),
-          Center(
-            child: ClipOval(
-              child: CachedNetworkImage(
-                fadeInCurve: Curves.ease,
-                imageUrl: streamSnapshot['profilePic'],
-                imageBuilder: (context, imageProvider) => Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: borderRadius10,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => PhotoViewPage(
+                    image: streamSnapshot['profilePic'],
+                    name: streamSnapshot['name'],
+                  ));
+            },
+            child: Center(
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  fadeInCurve: Curves.ease,
+                  imageUrl: streamSnapshot['profilePic'],
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: borderRadius10,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                placeholder: (context, url) => Center(child: spinKit()),
-                errorWidget: (context, url, error) => Center(
-                  child: Text(
-                    'Surat ýok',
-                    style: TextStyle(color: Colors.white, fontFamily: gilroyBold),
+                  placeholder: (context, url) => Center(child: spinKit()),
+                  errorWidget: (context, url, error) => Center(
+                    child: Text(
+                      'Surat ýok',
+                      style: TextStyle(color: Colors.white, fontFamily: gilroyBold),
+                    ),
                   ),
                 ),
               ),
@@ -126,6 +135,8 @@ class PoetsProductProfil extends StatelessWidget {
     );
   }
 
+  final HomeController homeController = Get.put(HomeController());
+
   GestureDetector card(AsyncSnapshot<QuerySnapshot<Object?>> streamSnapshot, int index) {
     return GestureDetector(
       onTap: () {
@@ -141,7 +152,11 @@ class PoetsProductProfil extends StatelessWidget {
             child: Container(
                 decoration: BoxDecoration(
                   borderRadius: borderRadius20,
-                  color: Colors.red,
+                  color: homeController.findMainColor.value == 1
+                      ? kPrimaryColor.withOpacity(0.4)
+                      : homeController.findMainColor.value == 2
+                          ? kPrimaryColor1.withOpacity(0.4)
+                          : kPrimaryColor2.withOpacity(0.4),
                 ),
                 margin: EdgeInsets.all(8),
                 child: ClipRRect(

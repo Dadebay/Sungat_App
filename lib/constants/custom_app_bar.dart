@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 
+import '../app/modules/home/controllers/home_controller.dart';
 import 'constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSize {
@@ -12,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
   final bool actionIcon;
   final String name;
 
-  const CustomAppBar({
+  CustomAppBar({
     required this.backArrow,
     required this.actionIcon,
     required this.name,
@@ -25,6 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight + 1);
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
           SizedBox.shrink()
       ],
       automaticallyImplyLeading: false,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: homeController.findMainColor.value == 1
+          ? kPrimaryColor
+          : homeController.findMainColor.value == 2
+              ? kPrimaryColor1
+              : kPrimaryColor2,
       title: Text(
         name.tr,
         maxLines: 1,
