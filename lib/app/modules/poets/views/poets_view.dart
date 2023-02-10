@@ -17,7 +17,7 @@ class PoetsView extends GetView<PoetsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(backArrow: false, actionIcon: false, name: 'Türkmen Halk Suratkeşleri'),
+      appBar: CustomAppBar(backArrow: true, actionIcon: false, name: 'poets1'),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('poets').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

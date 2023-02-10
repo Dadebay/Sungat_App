@@ -9,6 +9,7 @@ class BookReadPage extends StatelessWidget {
   const BookReadPage({super.key, required this.offlineBook, required this.bookURL, required this.bookName});
   @override
   Widget build(BuildContext context) {
+    print(bookURL);
     return Scaffold(
       body: Stack(
         children: [
@@ -22,10 +23,14 @@ class BookReadPage extends StatelessWidget {
                       fitEachPage: true,
                       pageFling: true,
                       pageSnap: true,
+                        
                       onError: (error) {
+                        print('errrrrrrrrrrrrrorrrrrrrrrrrrrr');
                         print(error.toString());
                       },
                       onPageError: (page, error) {
+                        print('errrrrrrrrrrrrrorrrrrrrrrrrrrr');
+
                         print('$page: ${error.toString()}');
                       },
                     ).fromAsset('assets/pdf/kitap1.pdf'),

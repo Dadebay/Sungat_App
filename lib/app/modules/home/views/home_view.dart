@@ -4,17 +4,19 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:get/get.dart';
 import 'package:sekillendirisungaty/app/modules/cards/books_card.dart';
+import 'package:sekillendirisungaty/constants/custom_app_bar.dart';
 
 import '../../../../constants/constants.dart';
-import '../../../../constants/custom_app_bar.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  final HomeController homeController = Get.put(HomeController());
+
+  HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(backArrow: false, actionIcon: false, name: 'books'),
+        appBar: CustomAppBar(backArrow: true, actionIcon: false, name: 'books'),
         body: StreamBuilder(
             stream: FirebaseFirestore.instance.collection('books').snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -43,6 +45,7 @@ class HomeView extends GetView<HomeController> {
                 itemBuilder: (context, index) {
                   return BookCard(
                     index: index,
+                    bookInGDrive: streamSnapshot.data!.docs[index]['bookInGDrive'],
                     bookURL: streamSnapshot.data!.docs[index]['bookURL'],
                     authorName: streamSnapshot.data!.docs[index]['bookAwtor'],
                     image: streamSnapshot.data!.docs[index]['bookImage'],

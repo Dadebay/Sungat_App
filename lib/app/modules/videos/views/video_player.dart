@@ -36,6 +36,7 @@ class _VideoPLayerMineState extends State<VideoPLayerMine> {
       ..initialize().then((value) {
         flickManager = FlickManager(
           autoPlay: true,
+          
           videoPlayerController: VideoPlayerController.network(widget.videoURL!),
         );
       });
@@ -47,6 +48,7 @@ class _VideoPLayerMineState extends State<VideoPLayerMine> {
     flickManager.dispose();
     controller.dispose();
   }
+
   final HomeController homeController = Get.put(HomeController());
 
   @override
@@ -58,7 +60,7 @@ class _VideoPLayerMineState extends State<VideoPLayerMine> {
           Center(
             child: controller.value.isInitialized
                 ? Stack(
-                    fit: StackFit.expand,
+                    // fit: StackFit.expand,p
                     children: [
                       AspectRatio(
                         aspectRatio: controller.value.aspectRatio,
@@ -71,8 +73,10 @@ class _VideoPLayerMineState extends State<VideoPLayerMine> {
                             preferredDeviceOrientation: const [
                               DeviceOrientation.portraitDown,
                               DeviceOrientation.portraitUp,
+                              DeviceOrientation.landscapeLeft,
+                              DeviceOrientation.landscapeRight,
                             ],
-                            preferredDeviceOrientationFullscreen: const [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp],
+                            preferredDeviceOrientationFullscreen: const [DeviceOrientation.portraitDown, DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight, DeviceOrientation.portraitUp],
                             flickManager: flickManager),
                       ),
                       // AspectRatio(aspectRatio: _controller.value.aspectRatio, child: VideoPlayer(_controller)),
@@ -88,11 +92,13 @@ class _VideoPLayerMineState extends State<VideoPLayerMine> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: Icon(IconlyLight.arrowLeftCircle, color:  homeController.findMainColor.value == 1
-                      ? kPrimaryColor.withOpacity(0.4)
-                      : homeController.findMainColor.value == 2
-                          ? kPrimaryColor1.withOpacity(0.4)
-                          : kPrimaryColor2.withOpacity(0.4), size: 30),
+                    child: Icon(IconlyLight.arrowLeftCircle,
+                        color: homeController.findMainColor.value == 1
+                            ? kPrimaryColor.withOpacity(0.4)
+                            : homeController.findMainColor.value == 2
+                                ? kPrimaryColor1.withOpacity(0.4)
+                                : kPrimaryColor2.withOpacity(0.4),
+                        size: 30),
                   ),
                 )
               : SizedBox.shrink(),

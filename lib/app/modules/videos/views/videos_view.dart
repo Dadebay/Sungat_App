@@ -20,7 +20,7 @@ class VideosView extends GetView<VideosController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(backArrow: false, actionIcon: false, name: 'videos'),
+      appBar: CustomAppBar(backArrow: true, actionIcon: false, name: 'videos'),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('videos').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -92,7 +92,9 @@ class VideosView extends GetView<VideosController> {
                           ),
                         )),
                         Positioned.fill(
-                          child: Lottie.asset('assets/lottie/button.json',),
+                          child: Lottie.asset(
+                            'assets/lottie/button.json',
+                          ),
                         ),
                       ],
                     ),

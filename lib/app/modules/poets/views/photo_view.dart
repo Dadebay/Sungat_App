@@ -24,9 +24,11 @@ class PhotoViewPage extends StatefulWidget {
 class _PhotoViewPageState extends State<PhotoViewPage> {
   @override
   void initState() {
-    Get.find<PoetsController>().downloadButtonStatus.value = false;
+    controller.downloadButtonStatus.value = false;
     super.initState();
   }
+
+  final PoetsController controller = Get.put(PoetsController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +41,14 @@ class _PhotoViewPageState extends State<PhotoViewPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             DownloadButton(onTap: () async {
-              Get.find<PoetsController>().downloadButtonStatus.value = !Get.find<PoetsController>().downloadButtonStatus.value;
+              controller.downloadButtonStatus.value = !controller.downloadButtonStatus.value;
               var response = await Dio().get(widget.image, options: Options(responseType: ResponseType.bytes));
 
               if (response.statusCode == 200) {
                 final result = await ImageGallerySaver.saveImage(Uint8List.fromList(response.data), quality: 60, name: widget.name);
                 if (result['isSuccess'] == true) {
                   showSnackBar('imageDownloadTitle', 'imageDownloadSubtitle', Colors.green);
-                  Get.find<PoetsController>().downloadButtonStatus.value = !Get.find<PoetsController>().downloadButtonStatus.value;
+                  controller.downloadButtonStatus.value = !controller.downloadButtonStatus.value;
                 } else {
                   showSnackBar('noConnection3', 'error', Colors.red);
                 }

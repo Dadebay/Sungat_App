@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -16,10 +15,10 @@ dynamic mainDartImports() async {
   /////////////
   await GetStorage.init();
   /////////////
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // await SystemChrome.setPreferredOrientations([
+  // DeviceOrientation.portraitUp,
+  // DeviceOrientation.portraitDown,
+  // ]);
   /////////////////////
   HttpOverrides.global = MyHttpOverrides();
   ///////////////

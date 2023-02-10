@@ -12,6 +12,7 @@ import '../../../../constants/constants.dart';
 import '../../../../constants/custom_app_bar.dart';
 import '../../../../constants/settings_button.dart';
 import '../../../../constants/widgets.dart';
+import 'about_us.dart';
 
 class SettingsView extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(backArrow: false, actionIcon: false, name: 'settings'),
+      appBar: CustomAppBar(backArrow: true, actionIcon: false, name: 'settings'),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -73,30 +74,6 @@ class _SettingsViewState extends State<SettingsView> {
             ),
           ),
           SettingButton(
-            name: 'versia',
-            onTap: () {},
-            icon: Text(
-              '1.0.0',
-              style: TextStyle(
-                  color: homeController.findMainColor.value == 1
-                      ? kPrimaryColor.withOpacity(0.4)
-                      : homeController.findMainColor.value == 2
-                          ? kPrimaryColor1.withOpacity(0.4)
-                          : kPrimaryColor2.withOpacity(0.4),
-                  fontFamily: gilroyMedium),
-            ),
-          ),
-          SettingButton(
-            name: 'share',
-            onTap: () {
-              Share.share(appShareLink, subject: appName);
-            },
-            icon: Icon(
-              IconlyBroken.arrowRightCircle,
-              color: Colors.black,
-            ),
-          ),
-          SettingButton(
             name: 'usedBook',
             onTap: () {
               Get.to(() => UsedBooks());
@@ -107,9 +84,19 @@ class _SettingsViewState extends State<SettingsView> {
             ),
           ),
           SettingButton(
-            name: 'giveLike',
+            name: 'aboutUs',
             onTap: () {
-              launchURL(appShareLink);
+              Get.to(() => AboutUS());
+            },
+            icon: Icon(
+              IconlyBroken.arrowRightCircle,
+              color: Colors.black,
+            ),
+          ),
+          SettingButton(
+            name: 'share',
+            onTap: () {
+              Share.share(appShareLink, subject: appName);
             },
             icon: Icon(
               IconlyBroken.arrowRightCircle,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-const String serverURL = 'http://216.250.8.54';
-
 Color kPrimaryColor = Color(0xff90caf8);
 Color kPrimaryColor1 = Color(0xfffd7e15);
 Color kPrimaryColor2 = Color(0xff6366f1);
@@ -26,47 +24,6 @@ const String tmIcon = 'assets/image/tm.png';
 const String ruIcon = 'assets/image/ru.png';
 const String engIcon = 'assets/image/eng.png';
 const String noData = 'assets/lottie/noData.json';
-const String appName = 'Şekillendiriş Sungaty';
+const String appName = 'Sungat daragty';
 const String appShareLink = 'https://play.google.com/store/apps/details?id=com.bilermennesil.yaka2';
 /////////////////////////////////////////////////
-
-const List sortData = [
-  {
-    'id': 1,
-    'name': 'sortDefault',
-    'sort_column': '',
-  },
-  {
-    'id': 2,
-    'name': 'sortPriceLowToHigh',
-    'sort_column': 'expensive',
-  },
-  {
-    'id': 3,
-    'name': 'sortPriceHighToLow',
-    'sort_column': 'cheap',
-  },
-  {
-    'id': 4,
-    'name': 'sortCreatedAtHighToLow',
-    'sort_column': 'latest',
-  },
-  {
-    'id': 5,
-    'name': 'sortCreatedAtLowToHigh',
-    'sort_column': 'oldest',
-  },
-  {
-    'id': 6,
-    'name': 'sortViews',
-    'sort_column': 'views',
-  },
-];
-const List cities = [
-  'Aşgabat',
-  'Ahal',
-  'Mary',
-  'Lebap',
-  'Daşoguz',
-  'Balkan',
-];

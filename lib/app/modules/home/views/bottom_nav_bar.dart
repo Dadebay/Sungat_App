@@ -2,15 +2,15 @@
 
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:sekillendirisungaty/app/modules/home/views/home_view.dart';
 import 'package:sekillendirisungaty/app/modules/poets/views/poets_view.dart';
+import 'package:sekillendirisungaty/app/modules/settings/views/settings_view.dart';
+import 'package:sekillendirisungaty/app/modules/videos/views/videos_view.dart';
 import 'package:sekillendirisungaty/constants/constants.dart';
 
-import '../../settings/views/settings_view.dart';
-import '../../videos/views/videos_view.dart';
 import '../controllers/home_controller.dart';
+import 'banners.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -20,84 +20,156 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   final HomeController homeController = Get.put(HomeController());
 
-  PageController tabBarPageController = PageController(
-    initialPage: 0,
-    keepPage: true,
-  );
-  int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: PageView(
-          controller: tabBarPageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            HomeView(),
-            VideosView(),
-            PoetsView(),
-            SettingsView(),
-          ],
-        ),
-        extendBody: true,
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Divider(
-              height: 1,
-              color: Colors.grey.shade100,
-              thickness: 1,
+        appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: homeController.findMainColor.value == 1
+              ? kPrimaryColor
+              : homeController.findMainColor.value == 2
+                  ? kPrimaryColor1
+                  : kPrimaryColor2,
+          title: Text(
+            appName.tr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: gilroyMedium,
+              fontSize: 22,
             ),
-            GNav(
-                backgroundColor: Colors.white,
-                rippleColor: Colors.white,
-                hoverColor: Colors.white,
-                tabBackgroundColor: homeController.findMainColor.value == 1
-                    ? kPrimaryColor.withOpacity(0.6)
-                    : homeController.findMainColor.value == 2
-                        ? kPrimaryColor1.withOpacity(0.6)
-                        : kPrimaryColor2.withOpacity(0.6),
-                gap: 6,
-                activeColor: Colors.blueGrey,
-                duration: Duration(milliseconds: 400),
-                color: Colors.black,
-                tabMargin: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
-                curve: Curves.easeInOut,
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                selectedIndex: tabBarPageController.initialPage,
-                onTabChange: (int index) {
-                  selectedIndex = index;
-                  setState(() {});
-                  tabBarPageController.jumpToPage(index);
+          ),
+          centerTitle: true,
+          leadingWidth: 70,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.to(() => SettingsView());
                 },
-                tabs: [
-                  GButton(
-                    icon: selectedIndex == 0 ? IconlyBold.bookmark : IconlyLight.bookmark,
-                    iconActiveColor: Colors.black,
-                    text: 'books'.tr,
-                    haptic: true,
-                    textStyle: TextStyle(fontSize: 14, fontFamily: gilroyMedium, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                  GButton(
-                    icon: selectedIndex == 1 ? IconlyBold.discovery : IconlyLight.discovery,
-                    iconActiveColor: Colors.black,
-                    text: 'videos'.tr,
-                    textStyle: TextStyle(fontSize: 14, fontFamily: gilroyMedium, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                  GButton(
-                    icon: selectedIndex == 2 ? IconlyBold.user3 : IconlyLight.user3,
-                    iconActiveColor: Colors.black,
-                    text: 'poets'.tr,
-                    textStyle: TextStyle(fontSize: 14, fontFamily: gilroyMedium, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                  GButton(
-                    icon: selectedIndex == 3 ? IconlyBold.setting : IconlyLight.setting,
-                    iconActiveColor: Colors.black,
-                    text: 'settings'.tr,
-                    textStyle: TextStyle(fontSize: 14, fontFamily: gilroyMedium, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                ]),
+                icon: Icon(
+                  IconlyBold.setting,
+                  color: Colors.white,
+                ))
+          ],
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Image.asset(
+              'assets/image/logo.png',
+            ),
+          ),
+        ),
+        body: ListView(
+          children: [
+            Banners(),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => HomeView());
+              },
+              child: Container(
+                width: Get.size.width,
+                height: 200,
+                margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(color: kPrimaryColor.withOpacity(0.4), borderRadius: borderRadius30),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: ClipRRect(
+                      borderRadius: borderRadius30,
+                      child: Image.asset(
+                        'assets/image/k3.png',
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                    Positioned.fill(
+                        child: Container(
+                      decoration: BoxDecoration(color: Colors.black54, borderRadius: borderRadius30),
+                    )),
+                    Positioned.fill(
+                        child: Center(
+                      child: Text(
+                        'books'.tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontFamily: gilroyBold, fontSize: 45),
+                      ),
+                    ))
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => VideosView());
+              },
+              child: Container(
+                width: Get.size.width,
+                height: 200,
+                margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(color: kPrimaryColor.withOpacity(0.4), borderRadius: borderRadius30),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: ClipRRect(
+                      borderRadius: borderRadius30,
+                      child: Image.asset(
+                        'assets/image/v1.png',
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                    Positioned.fill(
+                        child: Container(
+                      decoration: BoxDecoration(color: Colors.black54, borderRadius: borderRadius30),
+                    )),
+                    Positioned.fill(
+                        child: Center(
+                      child: Text(
+                        'videos'.tr,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontFamily: gilroyBold, fontSize: 45),
+                      ),
+                    ))
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => PoetsView());
+              },
+              child: Container(
+                width: Get.size.width,
+                height: 200,
+                margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(color: kPrimaryColor.withOpacity(0.4), borderRadius: borderRadius30),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: ClipRRect(
+                      borderRadius: borderRadius30,
+                      child: Image.asset(
+                        'assets/image/w1.png',
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                    Positioned.fill(
+                        child: Container(
+                      decoration: BoxDecoration(color: Colors.black54, borderRadius: borderRadius30),
+                    )),
+                    Positioned.fill(
+                        left: 15,
+                        right: 15,
+                        child: Center(
+                          child: Text(
+                            'poets1'.tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontFamily: gilroyBold, fontSize: 35),
+                          ),
+                        ))
+                  ],
+                ),
+              ),
+            ),
           ],
         ));
   }

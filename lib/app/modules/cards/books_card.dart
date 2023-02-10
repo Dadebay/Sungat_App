@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../constants/constants.dart';
 import '../../../constants/widgets.dart';
@@ -13,18 +14,21 @@ class BookCard extends StatelessWidget {
   final String image;
   final String authorName;
   final String bookURL;
+  final bool bookInGDrive;
   final HomeController homeController = Get.put(HomeController());
 
-  BookCard({super.key, required this.index, required this.name, required this.image, required this.authorName, required this.bookURL});
+  BookCard({super.key, required this.index, required this.name, required this.image, required this.authorName, required this.bookURL, required this.bookInGDrive});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => BookReadPage(
-              offlineBook: index == 0 ? true : false,
-              bookURL: index == 0 ? '' : bookURL,
-              bookName: name,
-            ));
+      onTap: () async {
+        bookInGDrive == true
+            ? await launchUrlString(bookURL)
+            : Get.to(() => BookReadPage(
+                  offlineBook: index == 0 ? true : false,
+                  bookURL: index == 0 ? '' : bookURL,
+                  bookName: name,
+                ));
       },
       child: Stack(
         alignment: Alignment.topCenter,
@@ -60,11 +64,13 @@ class BookCard extends StatelessWidget {
                             width: Get.size.width,
                             child: ElevatedButton(
                                 onPressed: () {
-                                  Get.to(() => BookReadPage(
-                                        offlineBook: index == 0 ? true : false,
-                                        bookName: name,
-                                        bookURL: index == 0 ? '' : bookURL,
-                                      ));
+                                  bookInGDrive == true
+                                      ? launchUrlString(bookURL)
+                                      : Get.to(() => BookReadPage(
+                                            offlineBook: index == 0 ? true : false,
+                                            bookURL: index == 0 ? '' : bookURL,
+                                            bookName: name,
+                                          ));
                                 },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,

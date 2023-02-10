@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sekillendirisungaty/app/modules/home/controllers/home_controller.dart';
 
@@ -144,39 +143,47 @@ class _ConnectionCheckpageState extends State with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-              child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.blueGrey.shade100,
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
               child: Text(
-                "Türkmenistanyň şekillendiriş sungatynyň taryhy.",
+                "Türkmenistanyň Döwlet çeperçilik akademiýasy.",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontFamily: gilroyBold, fontSize: 20),
+                style: TextStyle(color: Colors.blueGrey.shade800, fontFamily: gilroyBold, fontSize: 22),
               ),
             ),
-          )),
-          Text(
-            "Jumaýew Serdar Salamowiç",
-            style: TextStyle(color: Colors.black, fontFamily: gilroyBold, fontSize: 18),
-          ),
-          LinearProgressIndicator(
-            color: homeController.findMainColor.value == 1
-                ? kPrimaryColor
-                : homeController.findMainColor.value == 2
-                    ? kPrimaryColor1
-                    : kPrimaryColor2,
-          )
-        ],
+            Expanded(
+              child: Center(
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                  child: Image.asset(
+                    'assets/image/logo3.png',
+                    width: 400,
+                    height: 400,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              "Jumaýew Serdar Salamowiç",
+              style: TextStyle(color: Colors.black, fontFamily: gilroyRegular, fontSize: 18),
+            ),
+            LinearProgressIndicator(
+              color: homeController.findMainColor.value == 1
+                  ? kPrimaryColor
+                  : homeController.findMainColor.value == 2
+                      ? kPrimaryColor1
+                      : kPrimaryColor2,
+            )
+          ],
+        ),
       ),
     );
   }

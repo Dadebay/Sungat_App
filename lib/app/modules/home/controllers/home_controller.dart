@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 class HomeController extends GetxController {
   final RxBool userLogin = false.obs;
   final RxInt findMainColor = 1.obs;
+  final RxInt bannerDotsIndex = 0.obs;
 
   final storage = GetStorage();
 
